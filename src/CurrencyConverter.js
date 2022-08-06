@@ -13,12 +13,18 @@ function CurrencyConverter() {
     const [stateData, setStateData] = useState({
         data: {},
         firstCurrency: 'USD',
-        secondCurrency: '',
-        rate: 0,
-        value: 0
+        value: 0,
+        firstCurrency: {
+            name: 'USD',
+            rate: '1'
+        },
+        secondCurrency: {
+            name: '',
+            rate: 0
+        },
     })
 
-    const { data, firstCurrency, secondCurrency, rate, value } = stateData;
+    const { data, firstCurrency, secondCurrency, value } = stateData;
 
     //i think its more optimal code than that one below:
 
@@ -65,19 +71,22 @@ function CurrencyConverter() {
         const selectedIndex = e.target.options.selectedIndex ;
 
         setStateData(prev => ({
-            ...prev,
-            secondCurrency: e.target.value,
-            rate: Object.values(data.rates)[e.target.options[selectedIndex].getAttribute('data-key')]
+                ...prev,
+            [e.target.name]: {
+                name: e.target.value,
+                rate: Object.values(data.rates)[e.target.options[selectedIndex].getAttribute('data-key')],
+            }
         }))
+
     }
 
     return (
         <Wrapper>
             <FormCard
-                firstCurrency={firstCurrency}
-                secondCurrency={secondCurrency}
+                firstCurrency={firstCurrency.name}
+                secondCurrency={secondCurrency.name}
                 firstCurrencyValue={value}
-                secondCurrencyValue={(value*rate).toFixed(2)}
+                secondCurrencyValue={(value*(secondCurrency.rate / firstCurrency.rate)).toFixed(2)}
                 handleInput={handleInput}
                 handleSelect={handleSelect}
                 data={data.rates}

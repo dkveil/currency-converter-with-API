@@ -37,19 +37,8 @@ const FormCard = (props) => {
     return (
     <FormCardWrapper>
         <FormTitle>Currency Converter</FormTitle>
-            <select value={secondCurrency}  onChange={handleSelect}>
-                <option value=""/>
-                    {data && Object.keys(data).map((item, id) => (
-                        <option
-                        key={item}
-                        data-key={id}
-                        value={item}>
-                        {item}
-                        </option>
-                    ))}
-                </select>
             <FormInput
-                name="firstCurrencyValue"
+                name="firstCurrency"
                 type="number"
                 value={firstCurrencyValue}
                 valuename={firstCurrency}
@@ -58,7 +47,7 @@ const FormCard = (props) => {
                 options={data}
                 />
             <FormInput
-                name="secondCurrencyValue"
+                name="secondCurrency"
                 type="number"
                 value={secondCurrencyValue}
                 valuename={secondCurrency}
