@@ -13,18 +13,19 @@ function CurrencyConverter() {
 
     const [stateData, setStateData] = useState({
         data: {},
-        value: 0,
         firstCurrency: {
+            value: 1,
             name: 'USD',
-            rate: '1'
+            rate: 1
         },
         secondCurrency: {
+            value: 0,
             name: '',
             rate: 0
         },
     })
 
-    const { data, firstCurrency, secondCurrency, value } = stateData;
+    const { data, firstCurrency, secondCurrency} = stateData;
 
     //i think its more optimal code than that one below:
 
@@ -61,10 +62,46 @@ function CurrencyConverter() {
     })
 
     const handleInput = e => {
-        setStateData(prev => ({
-            ...prev,
-            value: e.target.value
-        }))
+
+        if(e.target.name === "firstCurrency"){
+            setStateData(prev => ({
+                ...prev,
+                firstCurrency: {
+                    ...prev.firstCurrency,
+                    value: e.target.value
+                },
+            }))
+
+            if(secondCurrency.name && secondCurrency.rate){
+                setStateData(prev => ({
+                    ...prev,
+                    secondCurrency: {
+                        ...prev.secondCurrency,
+                        value: (e.target.value*(secondCurrency.rate / firstCurrency.rate)).toFixed(2)
+                    }
+                }))
+            }
+        }
+
+        if(e.target.name === "secondCurrency"){
+            setStateData(prev => ({
+                ...prev,
+                secondCurrency: {
+                    ...prev.secondCurrency,
+                    value: e.target.value
+                }
+            }))
+
+            if(firstCurrency.name && firstCurrency.rate){
+                setStateData(prev => ({
+                    ...prev,
+                    firstCurrency: {
+                        ...prev.firstCurrency,
+                        value: (e.target.value*(secondCurrency.rate / firstCurrency.rate)).toFixed(2)
+                    }
+                }))
+            }
+        }
     }
 
     const handleSelect = e => {
@@ -85,8 +122,8 @@ function CurrencyConverter() {
             <FormCard
                 firstCurrency={firstCurrency.name}
                 secondCurrency={secondCurrency.name}
-                firstCurrencyValue={value}
-                secondCurrencyValue={(value*(secondCurrency.rate / firstCurrency.rate)).toFixed(2)}
+                firstCurrencyValue={firstCurrency.value}
+                secondCurrencyValue={secondCurrency.value}
                 handleInput={handleInput}
                 handleSelect={handleSelect}
                 data={data.rates}

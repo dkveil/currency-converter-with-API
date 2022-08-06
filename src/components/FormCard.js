@@ -51,8 +51,8 @@ const FormCard = (props) => {
                 type="number"
                 value={secondCurrencyValue}
                 valuename={secondCurrency}
+                onchange={handleInput}
                 onselect={handleSelect}
-                isnotreadable={true}
                 options={data}
             />
     </FormCardWrapper> );
