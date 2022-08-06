@@ -9,6 +9,8 @@ const Wrapper = styled.div`
     padding: 0 4px;
 `
 
+
+
 function CurrencyConverter() {
 
     const [stateData, setStateData] = useState({
@@ -19,7 +21,7 @@ function CurrencyConverter() {
             rate: 1
         },
         secondCurrency: {
-            value: 0,
+            value: '',
             name: '',
             rate: 0
         },
@@ -108,8 +110,9 @@ function CurrencyConverter() {
         const selectedIndex = e.target.options.selectedIndex ;
 
         setStateData(prev => ({
-                ...prev,
+            ...prev,
             [e.target.name]: {
+                value: '',
                 name: e.target.value,
                 rate: Object.values(data.rates)[e.target.options[selectedIndex].getAttribute('data-key')],
             }
@@ -127,6 +130,7 @@ function CurrencyConverter() {
                 handleInput={handleInput}
                 handleSelect={handleSelect}
                 data={data.rates}
+                date={data.date}
             />
         </Wrapper>
   );

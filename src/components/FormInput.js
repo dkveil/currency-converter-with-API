@@ -84,7 +84,7 @@ const FormInput = (props) => {
                 name={name}
                 value={valuename}
                 onInput={onselect}
-                onChange={() => setIsFocused(false)}
+                onChange={() => setIsFocused(true)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
             >
