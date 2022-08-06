@@ -6,13 +6,13 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     display: grid;
     justify-content: center;
+    padding: 0 4px;
 `
 
 function CurrencyConverter() {
 
     const [stateData, setStateData] = useState({
         data: {},
-        firstCurrency: 'USD',
         value: 0,
         firstCurrency: {
             name: 'USD',
