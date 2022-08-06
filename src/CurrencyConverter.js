@@ -4,12 +4,9 @@ import FormCard from './components/FormCard';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    display: grid;
-    justify-content: center;
     padding: 0 4px;
+    margin: 0;
 `
-
-
 
 function CurrencyConverter() {
 
