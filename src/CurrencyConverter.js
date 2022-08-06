@@ -1,5 +1,12 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react';
+import FormCard from './components/FormCard';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+    display: grid;
+    justify-content: center;
+`
 
 function CurrencyConverter() {
 
@@ -7,10 +14,11 @@ function CurrencyConverter() {
         data: {},
         firstCurrency: 'USD',
         secondCurrency: '',
-        rate: null
+        rate: 0,
+        value: 0
     })
 
-    const { data, firstCurrency, secondCurrency, rate } = stateData;
+    const { data, firstCurrency, secondCurrency, rate, value } = stateData;
 
     //i think its more optimal code than that one below:
 
@@ -46,6 +54,13 @@ function CurrencyConverter() {
 
     })
 
+    const handleInput = e => {
+        setStateData(prev => ({
+            ...prev,
+            value: e.target.value
+        }))
+    }
+
     const handleSelect = e => {
         const selectedIndex = e.target.options.selectedIndex ;
 
@@ -57,25 +72,17 @@ function CurrencyConverter() {
     }
 
     return (
-        <div>
-            <div>
-                <div>
-                    <select value={secondCurrency}  onChange={handleSelect}>
-                        <option value=""></option>
-                        {data.rates && Object.keys(data.rates).map((item, id) => (
-                            <option
-                            key={item}
-                            data-key={id}
-                            value={item}>
-                                {item}
-                            </option>
-                        ))}
-                    </select>
-                    {secondCurrency}<br />
-                    {rate}
-                </div>
-            </div>
-        </div>
+        <Wrapper>
+            <FormCard
+                firstCurrency={firstCurrency}
+                secondCurrency={secondCurrency}
+                firstCurrencyValue={value}
+                secondCurrencyValue={(value*rate).toFixed(2)}
+                handleInput={handleInput}
+                handleSelect={handleSelect}
+                data={data.rates}
+            />
+        </Wrapper>
   );
 }
 
